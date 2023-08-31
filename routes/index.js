@@ -27,10 +27,11 @@ router.post(
   }),
   login,
 );
-router.use('/users', auth, usersRouter);
 router.use('/movies', auth, moviesRouter);
+router.use('/users', auth, usersRouter);
 
-router.use((req, res, next) => {
+
+router.use('*', (req, res, next) => {
   next(new NotFoundError('Ресурс по указанному адресу не найден'));
 });
 
