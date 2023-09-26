@@ -23,8 +23,8 @@ function createMovie(req, res, next) {
     trailerLink,
     thumbnail,
     movieId,
-    nameRu,
-    nameEn,
+    nameRU,
+    nameEN,
   } = req.body;
   Movie.create({
     country,
@@ -37,17 +37,18 @@ function createMovie(req, res, next) {
     thumbnail,
     owner: req.user._id,
     movieId,
-    nameRu,
-    nameEn,
+    nameRU,
+    nameEN,
   })
     .then((movie) => {
       res.status(201).send({ data: movie });
     })
     .catch((err) => {
+      console.log(err);
       if (err.name === 'ValidationError') {
         return next(new BadRequestError('Переданы некорректные данные'));
       }
-      return next(new ServerError(`Произошла ошибка: ${err}`));
+        return next(new ServerError(`Произошла ошибка: ${err.message}`));
     });
 }
 
